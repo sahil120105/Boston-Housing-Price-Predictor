@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston House Price Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+            border-radius: 15px;
+        }
+        .header-title {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+        .btn-predict {
+            background-color: #0d6efd;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+        .btn-predict:hover {
+            transform: scale(1.02);
+            background-color: #0b5ed7;
+        }
+        .result-box {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #198754;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card p-4">
+                <div class="text-center mb-4">
+                    <h1 class="header-title">Boston Housing Price Prediction</h1>
+                    <p class="text-muted">Enter the property details below to get an estimated price.</p>
+                </div>
+
+                <form action="{{ url_for('predict') }}" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">CRIM (Crime Rate)</label>
+                            <input type="number" step="any" class="form-control" name="CRIM" placeholder="e.g. 0.00632" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">ZN (Residential Land Zone)</label>
+                            <input type="number" step="any" class="form-control" name="ZN" placeholder="e.g. 18.0" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">INDUS (Non-retail Business)</label>
+                            <input type="number" step="any" class="form-control" name="INDUS" placeholder="e.g. 2.31" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">CHAS (Charles River)</label>
+                            <select class="form-select" name="CHAS" required>
+                                <option value="0">No (0)</option>
+                                <option value="1">Yes (1)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">NOX (Nitric Oxides)</label>
+                            <input type="number" step="any" class="form-control" name="NOX" placeholder="e.g. 0.538" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">RM (Avg Rooms)</label>
+                            <input type="number" step="any" class="form-control" name="RM" placeholder="e.g. 6.575" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">AGE (Built prior to 1940)</label>
+                            <input type="number" step="any" class="form-control" name="AGE" placeholder="e.g. 65.2" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">DIS (Distance to Employment)</label>
+                            <input type="number" step="any" class="form-control" name="DIS" placeholder="e.g. 4.09" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">RAD (Highway Access)</label>
+                            <input type="number" step="any" class="form-control" name="RAD" placeholder="e.g. 1.0" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">TAX (Property Tax Rate)</label>
+                            <input type="number" step="any" class="form-control" name="TAX" placeholder="e.g. 296.0" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">PTRATIO (Pupil-Teacher Ratio)</label>
+                            <input type="number" step="any" class="form-control" name="PTRATIO" placeholder="e.g. 15.3" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">B (Black Population Prop)</label>
+                            <input type="number" step="any" class="form-control" name="B" placeholder="e.g. 396.90" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">LSTAT (% Lower Status Population)</label>
+                            <input type="number" step="any" class="form-control" name="LSTAT" placeholder="e.g. 4.98" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-predict">Predict Price</button>
+                    </div>
+                </form>
+
+                {% if prediction_text %}
+                <div class="alert alert-success text-center result-box" role="alert">
+                    {{ prediction_text }}
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
